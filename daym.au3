@@ -21,15 +21,21 @@ While OpenFileArt($arr)
 	CheckData()
 	SetTimeMajor($TIME1, $TIME1_shift)
 	MakeZero()
-	ServInMajor($VNOS)
+	If $VNOS <> "0.00" Then ServInMajor($VNOS)
 	SendArt()
 	MakeSales()
 	MakeReturns()
+	If $VUNOS = "0.00" Then $TIME2_shift -= 2
+	If $VUNOS2 = "0.00" Then $TIME2_shift -= 2
 	SetTimeMajor($TIME2, $TIME2_shift)
-	XMajor()
-	ServOutMajor($VUNOS)
-	XMajor()
-	ServOutMajor($VUNOS2)
+	If $VUNOS <> "0.00" Then
+		XMajor()
+		ServOutMajor($VUNOS)
+	EndIf
+	If $VUNOS2 <> "0.00" Then
+		XMajor()
+		ServOutMajor($VUNOS2)
+	EndIf
 	XMajor()
 	ZMajor()
 WEnd

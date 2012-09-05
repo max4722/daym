@@ -231,7 +231,7 @@ Func SetTimeS($date, $hh, $mm, $ss, $ds = 0)
 	;$res = ExecCMD(61, $datetime)
 	$CurrentDT = GetTime()
 	$countdown = $ss + $ss2 - $deltaSec + 1
-	If StringTrimRight($CurrentDT, 3) == StringTrimRight($datetime, 3) Then
+	If StringTrimRight($CurrentDT, 2) = StringTrimRight($datetime, 2) Then
 		$CurrentSec = StringRight($CurrentDT, 2)
 		$countdown -= $CurrentSec
 		$DoNotSetTimeFlag = True
@@ -240,13 +240,17 @@ Func SetTimeS($date, $hh, $mm, $ss, $ds = 0)
 	If Not $DoNotSetTimeFlag Or $countdown < 0 Then $res = SetTimeStr($datetime)
 	$begin = TimerInit()
 	;ждем секунды
+	Local $i, $sec, $oldsec = ''
 	If $countdown > 0 Then
 		Do
-			Sleep(500)
-			$i = Int(100 * (TimerDiff($begin) / (1000 * ($countdown))))
-			If $i > 100 Then $i = 100
-			WinSetTitle($CommandExecWinName, "", $CommandExecWinName & " " & $countdown + 1 - Int(TimerDiff($begin) / 1000) & " секунд " & $i & "%")
-		Until $i >= 100
+			$sec = Int(TimerDiff($begin) / 1000)
+			If $sec <> $oldsec Then
+				$oldsec = $sec
+				$i = Int(100 * (TimerDiff($begin) / (1000 * ($countdown))))
+				If $i > 100 Then $i = 100
+				WinSetTitle($CommandExecWinName, "", $CommandExecWinName & " " & $countdown + 1 - Int(TimerDiff($begin) / 1000) & " секунд " & $i & "%")
+			EndIf
+		Until $i = 100
 	EndIf
 	WinSetTitle($CommandExecWinName, "", $CommandExecWinName)
 	CloseCMDDialog()

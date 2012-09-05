@@ -159,7 +159,7 @@ Func InitConsts()
 	$ShowInfoEnebled = 0
 	$ShowInfoDelay = 0 ;сек
 	$GlobalDelay = 50 ;мс
-	$TIME1_shift = 3
+	$TIME1_shift = 2
 	$TIME2_shift = 6
 	$TIME3_shift = 4
 	$MaxOpenFileTry = 3
